@@ -1,0 +1,7 @@
+aid: campbell-soup
+url: https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
+modified: '2026-03-23'
+apis: []
+common:
+  - type: Website
+    url: https://www.campbell-soup.com
