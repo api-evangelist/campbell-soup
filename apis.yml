@@ -1,7 +1,12 @@
 aid: campbell-soup
-url: https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
 modified: '2026-03-23'
 apis: []
 common:
   - type: Website
     url: https://www.campbell-soup.com
+description: >-
+  Campbell Soup is a manufacturer and marketer of high-quality, branded convenience
+  food products, including soups, simple meals, beverages, snacks, and packaged fresh
+  foods.
