@@ -47,6 +47,8 @@ apis:
       - type: DeveloperPortal
         url: https://developer.campbellskitchen.com/
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/campbell-soup-company
   - type: Website
     url: https://www.thecampbellscompany.com/
   - type: ConsumerSite
