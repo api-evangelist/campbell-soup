@@ -2,7 +2,7 @@ aid: campbell-soup
 name: Campbell Soup
 url: >-
   https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 type: Index
 tags:
   - Food
