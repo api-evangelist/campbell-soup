@@ -48,6 +48,8 @@ apis:
       - type: DeveloperPortal
         url: https://developer.campbellskitchen.com/
 common:
+  - type: DomainSecurity
+    url: security/campbell-soup-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/campbell-soup-company
   - type: Website
