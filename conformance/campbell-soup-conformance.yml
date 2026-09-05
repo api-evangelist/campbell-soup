@@ -1,0 +1,74 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/campbell-soup-content-api-openapi.yml + live responses observed 2026-09-05
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  Cross-cutting standards the live surface does and does not honour. Campbell's makes no
+  conformance claim anywhere; every verdict below is our own observation.
+conformance:
+  - id: rfc8288-web-linking
+    conforms: true
+    evidence: >-
+      Collection responses carry an RFC 8288 `Link` header with rel="next"/rel="prev", observed on
+      GET https://www.campbells.com/wp-json/wp/v2/recipe?per_page=1 on 2026-09-05.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Page-number pagination with page/per_page/offset parameters and X-WP-Total / X-WP-TotalPages
+      response headers, observed live.
+  - id: hal-style-hypermedia
+    conforms: true
+    evidence: >-
+      Every resource embeds a `_links` object with self/collection/about/wp:term relations, and
+      `_embed` inlines them. Observed in the /wp/v2/search and /wp/v2/recipe response bodies.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use the flat WordPress envelope {code,message,data.status} with content-type
+      application/json, not application/problem+json. See errors/campbell-soup-problem-types.yml.
+  - id: idempotency
+    conforms: false
+    evidence: No idempotency key or replay-protection mechanism is declared on any route.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      /.well-known/oauth-authorization-server returned 404 on campbells.com; no OAuth flow is
+      declared in the route document.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on www.campbells.com on 2026-09-05.
+  - id: openapi
+    conforms: false
+    evidence: >-
+      Campbell's publishes no OpenAPI. The description in openapi/ is derived by this pipeline from
+      the site's own wp/v2 route discovery document, not published by the provider.
+  - id: schema-org-recipe
+    conforms: true
+    evidence: >-
+      Recipe pages emit schema.org/Recipe JSON-LD via the Yoast SEO plugin that also generates
+      https://www.campbells.com/llms.txt (200, fetched 2026-09-05). This is the only structured
+      food-domain vocabulary Campbell's actually publishes.
+domain_standards:
+  - id: schema-org-recipe
+    standard: schema.org Recipe
+    conforms: true
+    surface: HTML JSON-LD on recipe pages (not the REST API)
+    evidence: >-
+      Yoast SEO emits schema.org Recipe structured data on https://www.campbells.com/recipes/*.
+      The wp/v2 REST representation does NOT carry it — recipe fields come back as rendered HTML
+      in content/excerpt plus site-specific meta, so an agent reading the API gets no standard
+      food vocabulary.
+  - id: gs1-gtin
+    standard: GS1 GTIN / UPC
+    conforms: false
+    evidence: >-
+      The retired Campbell's Kitchen API advertised UPC lookup. No UPC/GTIN field is declared on
+      the /wp/v2/product route in the current discovery document, and none appeared in the product
+      records observed on 2026-09-05. The UPC capability did not survive the retirement.
+certifications: []
+compliance_programs: []
+note: >-
+  No Compliance pointer is emitted: Campbell's publishes no certification, audit report or trust
+  center covering an API surface. Its food-safety and ESG disclosures are corporate reporting, not
+  an API compliance program, and conflating the two would credit an API posture that does not exist.

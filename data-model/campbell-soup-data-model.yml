@@ -1,0 +1,172 @@
+generated: '2026-09-05'
+method: derived
+source: >-
+  https://www.campbells.com/wp-json/wp/v2/types and
+  https://www.campbells.com/wp-json/wp/v2/taxonomies (both fetched 2026-09-05, HTTP 200)
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  The content graph Campbell's actually exposes. Every entity, every taxonomy and every edge below
+  was read from the site's own live /types and /taxonomies documents — the associations are
+  declared by Campbell's WordPress registration, not inferred by us.
+entities:
+  - id: recipe
+    name: Recipes
+    rest_base: recipe
+    path: /wp/v2/recipe
+    count_observed: 316
+    description: Campbell's recipe catalog — the surviving core of the retired Campbell's Kitchen API.
+  - id: product
+    name: Products
+    rest_base: product
+    path: /wp/v2/product
+    count_observed: 210
+    description: Campbell's-manufactured products, the richest-classified entity in the graph (five taxonomies).
+  - id: external_product
+    name: External Product
+    rest_base: external_product
+    path: /wp/v2/external_product
+    count_observed: null
+    description: >-
+      Products surfaced but not classified by the Campbell's product taxonomies — appeared in
+      /wp/v2/search results (e.g. "dry onion recipe soup & dip mix"). Carries revisions and
+      autosaves, unlike `product`.
+  - id: csc_faq
+    name: FAQs
+    rest_base: csc_faq
+    path: /wp/v2/csc_faq
+    count_observed: 36
+    description: Consumer question-and-answer entries, topic-classified.
+  - id: post
+    name: Posts
+    rest_base: posts
+    path: /wp/v2/posts
+    description: Editorial articles.
+  - id: page
+    name: Pages
+    rest_base: pages
+    path: /wp/v2/pages
+  - id: attachment
+    name: Media
+    rest_base: media
+    path: /wp/v2/media
+    description: Images referenced by recipes and products through featured_media.
+  - id: user
+    name: Authors
+    rest_base: users
+    path: /wp/v2/users
+    count_observed: 12
+taxonomies:
+  - id: csc_main_ingredient
+    name: Main Ingredients
+    applies_to: [product]
+    path: /wp/v2/csc_main_ingredient
+    terms_observed: 0
+    note: Registered and REST-exposed, but returned an empty array with X-WP-Total 0 on 2026-09-05 — declared but unpopulated.
+  - id: csc_dietary_alternative
+    name: Dietary Alternatives
+    applies_to: [product]
+    path: /wp/v2/csc_dietary_alternative
+  - id: csc_product_cat
+    name: Product Categories
+    applies_to: [product]
+    path: /wp/v2/csc_product_cat
+  - id: csc_product_line
+    name: Product Lines
+    applies_to: [product]
+    path: /wp/v2/csc_product_line
+    note: The brand axis — Chunky, SpaghettiOs, Swanson and siblings.
+  - id: csc_product_tag
+    name: Product Tags
+    applies_to: [product]
+    path: /wp/v2/csc_product_tag
+  - id: csc_recipe_collection
+    name: Recipe Collections
+    applies_to: [recipe]
+    path: /wp/v2/csc_recipe_collection
+    note: The curated groupings llms.txt advertises — "One Pot Recipes", "Casseroles & Bakes".
+  - id: csc_topic
+    name: Topics
+    applies_to: [csc_faq]
+    path: /wp/v2/csc_topic
+  - id: category
+    name: Categories
+    applies_to: [post]
+    path: /wp/v2/categories
+  - id: post_tag
+    name: Tags
+    applies_to: [post]
+    path: /wp/v2/tags
+relationships:
+  - from: product
+    to: csc_dietary_alternative
+    type: has_many
+    via: csc_dietary_alternative
+    declared_by: /wp/v2/types -> product.taxonomies
+  - from: product
+    to: csc_main_ingredient
+    type: has_many
+    via: csc_main_ingredient
+    declared_by: /wp/v2/types -> product.taxonomies
+  - from: product
+    to: csc_product_cat
+    type: has_many
+    via: csc_product_cat
+    declared_by: /wp/v2/types -> product.taxonomies
+  - from: product
+    to: csc_product_line
+    type: has_many
+    via: csc_product_line
+    declared_by: /wp/v2/types -> product.taxonomies
+  - from: product
+    to: csc_product_tag
+    type: has_many
+    via: csc_product_tag
+    declared_by: /wp/v2/types -> product.taxonomies
+  - from: recipe
+    to: csc_recipe_collection
+    type: has_many
+    via: csc_recipe_collection
+    declared_by: /wp/v2/types -> recipe.taxonomies
+  - from: csc_faq
+    to: csc_topic
+    type: has_many
+    via: csc_topic
+    declared_by: /wp/v2/types -> csc_faq.taxonomies
+  - from: recipe
+    to: attachment
+    type: has_one
+    via: featured_media
+    declared_by: WordPress core featured_media field on the recipe route
+  - from: product
+    to: attachment
+    type: has_one
+    via: featured_media
+  - from: recipe
+    to: user
+    type: belongs_to
+    via: author
+  - from: post
+    to: category
+    type: has_many
+    via: category
+  - from: post
+    to: post_tag
+    type: has_many
+    via: post_tag
+gaps:
+  - >-
+    THE RECIPE/PRODUCT EDGE IS MISSING. `recipe` carries exactly one taxonomy
+    (csc_recipe_collection) and no declared relation to `product`. The retired Campbell's Kitchen
+    API's headline capability — find recipes by the Campbell's product or UPC they use — has no
+    declared representation in this graph. An agent can list recipes and list products but cannot
+    join them.
+  - >-
+    NO NUTRITION ENTITY. The retired API returned Nutrition Facts panel data. No nutrition type,
+    taxonomy or declared field exists in the current graph.
+  - >-
+    NO UPC/GTIN FIELD on `product`. See conformance/campbell-soup-conformance.yml (gs1-gtin).
+  - >-
+    csc_main_ingredient is registered but empty (0 terms), so ingredient-based product search —
+    another Campbell's Kitchen headline — is exposed but non-functional.
+render: null

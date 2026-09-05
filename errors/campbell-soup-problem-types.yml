@@ -1,0 +1,57 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/campbell-soup-content-api-openapi.yml + live 4xx responses observed on www.campbells.com
+provider: The Campbell's Company
+providerId: campbell-soup
+format: wordpress-rest-error
+rfc9457: false
+media_type: application/json
+envelope:
+  description: >-
+    WordPress REST returns a flat JSON error object, not RFC 9457 problem+json. The HTTP status is
+    repeated inside data.status.
+  fields:
+    - name: code
+      type: string
+      description: Machine-readable error slug (e.g. rest_no_route, rest_invalid_param).
+    - name: message
+      type: string
+      description: Human-readable sentence, localized to the site language.
+    - name: data.status
+      type: integer
+      description: The HTTP status, duplicated in the body.
+  example: |
+    {"code":"rest_no_route","message":"No route was found matching the URL and request method.","data":{"status":404}}
+problem_types:
+  - code: rest_no_route
+    status: 404
+    title: No route matched
+    detail: The path or method is not registered on this namespace.
+    remediation: Re-read the route list at https://www.campbells.com/wp-json/wp/v2 — note that /wp-json/ (the namespace index) is itself 404 on this host; only /wp-json/wp/v2 is served.
+    observed: true
+    evidence: GET https://www.campbells.com/wp-json/ returned 404 with this body on 2026-09-05.
+  - code: rest_invalid_param
+    status: 400
+    title: Invalid parameter
+    detail: A query parameter failed the schema declared in the route's args block.
+    remediation: Check the parameter's declared type/enum in openapi/campbell-soup-content-api-openapi.yml.
+    observed: false
+  - code: rest_forbidden
+    status: 401
+    title: Authentication required
+    detail: The operation requires WordPress credentials the public cannot obtain.
+    remediation: Not remediable by a third party — the write surface is operator-only.
+    observed: false
+  - code: edge_forbidden
+    status: 403
+    title: Blocked at the edge, not by the application
+    detail: >-
+      www.thecampbellscompany.com returns a bare nginx 403 HTML page (not a WordPress error object)
+      for every non-HTML path, including its own /wp-json/wp/v2 collections and /llms.txt, while
+      serving HTML pages and /robots.txt with 200 to the same client.
+    remediation: Provider-side — an edge/WAF rule, not an application permission.
+    observed: true
+    evidence: GET https://www.thecampbellscompany.com/wp-json/wp/v2/posts returned 403 text/html on 2026-09-05.
+notes: >-
+  No published error reference exists. Every entry above is either observed live or read from the
+  route document's declared argument schemas; none is invented.

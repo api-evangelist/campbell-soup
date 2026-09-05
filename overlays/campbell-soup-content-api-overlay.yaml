@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay — The Campbell's Company Content API
+  version: 1.0.0
+  x-generated: '2026-09-05'
+  x-method: generated
+  x-source: openapi/campbell-soup-content-api-openapi.yml
+  x-note: >-
+    Captures API Evangelist's enhancements on top of the derived description so the derived spec
+    stays a faithful mechanical transform of Campbell's own wp/v2 route document. Campbell's
+    publishes no OpenAPI, so this overlay extends our derivation, not a provider artifact.
+extends: openapi/campbell-soup-content-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-provenance:
+        derived-from: https://www.campbells.com/wp-json/wp/v2
+        derived-on: '2026-09-05'
+        published-by-provider: false
+      x-successor-to:
+        api: Campbell's Kitchen API
+        retired-host: developer.campbellskitchen.com
+        retired-evidence: NXDOMAIN as of 2026-09-05
+        announced-by-provider: false
+  - target: $.paths['/wp/v2/recipe'].get
+    update:
+      summary: List Campbell's recipes
+      description: >-
+        Returns the Campbell's recipe catalog. 316 items observed 2026-09-05. Filter by
+        `csc_recipe_collection` term ids to scope to a curated collection, and by `search` for
+        keyword lookup. Anonymous; no key.
+      x-observed-total: 316
+      x-agentic-access:
+        action-class: read
+        consequence: none
+        escalation: none
+  - target: $.paths['/wp/v2/product'].get
+    update:
+      summary: List Campbell's products
+      description: >-
+        Returns the Campbell's product catalog. 210 items observed 2026-09-05. Filterable across
+        five taxonomies — csc_product_line (brand), csc_product_cat, csc_product_tag,
+        csc_dietary_alternative and csc_main_ingredient. Note csc_main_ingredient was observed with
+        zero terms, so ingredient filtering is declared but inert.
+      x-observed-total: 210
+      x-agentic-access:
+        action-class: read
+        consequence: none
+        escalation: none
+  - target: $.paths['/wp/v2/csc_faq'].get
+    update:
+      summary: List consumer FAQs
+      x-observed-total: 36
+  - target: $.paths['/wp/v2/search'].get
+    update:
+      summary: Cross-type keyword search
+      description: >-
+        Spans every registered post type including external_product. Returned 422 matches for
+        "soup" on 2026-09-05.
+  - target: $.paths['/wp/v2/csc_main_ingredient'].get
+    update:
+      x-caveat: >-
+        Registered and REST-exposed but empty — X-WP-Total was 0 on 2026-09-05. Treat as a
+        declared-but-unpopulated surface.

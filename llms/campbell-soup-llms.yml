@@ -1,0 +1,15 @@
+generated: '2026-09-05'
+method: searched
+source: https://www.campbells.com/llms.txt
+provider: The Campbell's Company
+providerId: campbell-soup
+http_status: 200
+content_type: text/plain
+bytes: 2428
+file: llms/campbell-soup-llms.txt
+generator: Yoast SEO v28.2
+note: >-
+  Fetched verbatim on 2026-09-05. This is a real provider-served llms.txt, auto-emitted by the
+  Yoast SEO plugin on the WordPress site behind www.campbells.com. It is a CONTENT index — pages,
+  products, recipes, recipe collections and the sitemap — not an API description, and it does not
+  mention the wp/v2 REST surface that the same site serves. No llms-full.txt is published (404).

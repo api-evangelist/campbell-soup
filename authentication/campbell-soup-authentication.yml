@@ -1,0 +1,37 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/campbell-soup-content-api-openapi.yml (derived from https://www.campbells.com/wp-json/wp/v2) + live anonymous probes
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  The public surface is anonymous-read. Campbell's issues no developer credentials of any kind:
+  there is no signup, no key request, no OAuth server and no documented auth page. Reads require
+  nothing; writes are gated by WordPress core's own operator credentials, which are not available
+  to the public.
+schemes:
+  - id: anonymous
+    type: none
+    applies_to: all GET operations
+    evidence: >-
+      GET https://www.campbells.com/wp-json/wp/v2/recipe?per_page=1 returned 200 with no
+      Authorization header on 2026-09-05, carrying `Allow: GET` and `X-WP-Total: 316`.
+  - id: basicAuth
+    type: http
+    scheme: basic
+    applies_to: all POST/PUT/PATCH/DELETE operations declared by the wp/v2 route document
+    public: false
+    evidence: >-
+      WordPress application passwords over HTTP Basic. The route discovery document declares the
+      write methods and the surface exposes /wp/v2/users/{id}/application-passwords, but the live
+      response advertises `Allow: GET` to anonymous callers and Campbell's publishes no way for a
+      third party to obtain credentials.
+oauth: false
+openid_connect: false
+mutual_tls: false
+api_keys: false
+signup_url: null
+docs: null
+notes: >-
+  The retired Campbell's Kitchen developer API (developer.campbellskitchen.com) issued API keys via
+  a developer portal. That host is NXDOMAIN as of 2026-09-05, so the key-issuing program is gone;
+  what survives is an unauthenticated read surface with no onboarding at all.

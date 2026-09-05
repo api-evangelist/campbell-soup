@@ -1,0 +1,81 @@
+generated: '2026-09-05'
+method: probed
+source: live anonymous HTTPS probes of every host this record knows
+provider: The Campbell's Company
+providerId: campbell-soup
+note: >-
+  Every named path was probed anonymously on 2026-09-05 with a browser User-Agent.
+  NOTHING was found: campbells.com answers 404 for all five, and thecampbellscompany.com
+  answers 403 for every non-HTML path (an edge policy — its own /robots.txt and HTML pages
+  return 200 to the same client, so this is bot filtering, not absence).
+  No WellKnown or SecurityTxt pointer is emitted, because a recorded absence is not a presence.
+hosts:
+  - host: www.campbells.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: campbells.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+  - host: www.thecampbellscompany.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 403
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+        file: null
+      - path: /.well-known/api-catalog
+        status: 403
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+      - path: /.well-known/agent.json
+        status: 403
+        file: null
+  - host: campbellskitchen.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 0
+        file: null
+        note: TLS handshake fails — the certificate presented does not cover the apex; the host 301s to www.campbells.com/recipes/ over HTTP only.
+  - host: developer.campbellskitchen.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 0
+        file: null
+        note: NXDOMAIN — the former developer portal host no longer resolves in DNS.

@@ -1,32 +1,53 @@
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
-provider: Campbell Soup
+provider: The Campbell's Company
 providerId: campbell-soup
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-09-05'
+generated: '2026-09-05'
+method: probed
+source: live response headers observed on https://www.campbells.com/wp-json/wp/v2/* on 2026-09-05
+reconciled: true
 tags:
   - Food
   - Consumer Packaged Goods
   - Recipes
-  - Brands
   - Rate Limiting
-description: Campbell Soup does not publish a public developer API, so no programmatic rate limits
-  are documented. This artifact preserves the API Commons Rate Limits structure with empty limits and
-  a note explaining the absence of public API throttling policy.
-sources:
-  - https://www.campbellsoupcompany.com/
-  - https://www.campbells.com/
-notes: |
-  Campbell Soup (now The Campbell's Company) does not publish a public, general-purpose developer API
-  or developer pricing.
-responseCodes: {}
+limit_count: 0
 limits: []
-policies: []
+description: >-
+  Campbell's publishes no API rate limits and returns no rate-limit headers. Every observed wp/v2
+  response was checked for X-RateLimit-*, RateLimit-*, and Retry-After; none was present. An agent
+  calling this API has no runtime signal telling it how hard it may push, and no documented number
+  to fall back on.
+response_headers_observed:
+  - header: X-WP-Total
+    purpose: pagination, not throttling
+  - header: X-WP-TotalPages
+    purpose: pagination, not throttling
+  - header: cache-control
+    value: max-age=600, must-revalidate
+    purpose: >-
+      The only capacity-shaping signal present — a 10-minute cache window that a well-behaved
+      client should honour in place of an explicit limit.
+  - header: Link
+    purpose: RFC 8288 next/prev cursors
+rate_limit_headers: []
+exhaustion_status: null
+policies:
+  - scope: crawlers
+    signal: 'crawl-delay: 10'
+    source: https://www.campbells.com/robots.txt
+    note: >-
+      Binds crawlers, not API callers, and no WordPress REST path is disallowed there (only
+      /wp-admin/). It is the closest thing to a published pace Campbell's offers, and it is a
+      reasonable default for an unthrottled surface with no published limit.
+responseCodes: {}
+notes: >-
+  Supersedes the 2026-05-04 bulk-sweep scaffold, which recorded no limits on the grounds that no
+  public API existed. The absence of limits is now a measured fact about a live API rather than a
+  consequence of there being nothing to measure.
 maintainers:
   - FN: API Evangelist
     url: http://apievangelist.com

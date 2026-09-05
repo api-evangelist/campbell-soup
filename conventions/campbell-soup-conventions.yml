@@ -1,0 +1,123 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/campbell-soup-content-api-openapi.yml + live response headers observed on www.campbells.com 2026-09-05
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  Cross-cutting semantics of the WordPress wp/v2 surface Campbell's serves. Everything below was
+  read from live responses or from the route discovery document; nothing is asserted from the
+  WordPress manual where this deployment was not observed to do it.
+auth_style:
+  description: Anonymous read; HTTP Basic (WordPress application passwords) for writes, not publicly issuable.
+  see: authentication/campbell-soup-authentication.yml
+pagination:
+  style: page-number
+  params:
+    - name: page
+      description: 1-based page index.
+    - name: per_page
+      description: Items per page, default 10, maximum 100 (declared in the route args).
+    - name: offset
+      description: Alternative absolute offset.
+  response_signals:
+    - header: X-WP-Total
+      description: Total matching items. Observed 316 on /wp/v2/recipe, 210 on /wp/v2/product, 36 on /wp/v2/csc_faq.
+    - header: X-WP-TotalPages
+      description: Total pages at the current per_page.
+    - header: Link
+      description: RFC 8288 rel="next" / rel="prev" cursors. Observed on every collection response.
+  evidence: Headers captured from GET https://www.campbells.com/wp-json/wp/v2/recipe?per_page=1 on 2026-09-05.
+filtering_and_search:
+  description: Collections accept search, slug, include, exclude, order, orderby, and per-taxonomy filters declared in each route's args block.
+  full_text: GET /wp/v2/search?search=<term> spans every registered post type and returned X-WP-Total 422 for "soup" on 2026-09-05.
+field_selection:
+  supported: true
+  params:
+    - name: _fields
+      description: Comma-separated sparse fieldset, WordPress core.
+    - name: _embed
+      description: Inlines linked resources (author, terms, featured media) via the _links graph.
+  note: _fields/_embed are WordPress core behaviours; they are not declared per-route in the discovery document.
+versioning:
+  scheme: namespace-in-path
+  current: wp/v2
+  description: >-
+    The version is the namespace segment. There is no version header, no date-pinning and no
+    published policy — Campbell's inherits whatever namespace its WordPress core ships.
+  evidence: https://www.campbells.com/wp-json/wp/v2
+error_envelope:
+  format: wordpress-rest-error
+  rfc9457: false
+  see: errors/campbell-soup-problem-types.yml
+request_id_tracing:
+  supported: false
+  note: No correlation/request-id header was present on any observed response.
+rate_limit_signaling:
+  supported: false
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header appeared on any observed response.
+    The only throttling signal Campbell's publishes anywhere is `crawl-delay: 10` in
+    https://www.campbells.com/robots.txt, which binds crawlers, not API callers.
+  see: rate-limits/campbell-soup-rate-limits.yml
+caching:
+  supported: true
+  header: 'cache-control: max-age=600, must-revalidate'
+  note: >-
+    Every observed wp/v2 response carried a 10-minute cache window. Responses also carry
+    `X-Robots-Tag: noindex`.
+metadata:
+  supported: true
+  note: Custom fields surface under a `meta` object per resource where the site registers them for REST.
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  description: >-
+    No replay-protection mechanism exists. There is no Idempotency-Key header, no client-supplied
+    request identifier, and no documented dedupe window. The point is largely moot for third
+    parties — the write surface is unreachable without operator credentials Campbell's does not
+    issue — but for the mutating operations the contract declares, a retry after a timeout would
+    create a duplicate.
+  evidence: >-
+    No idempotency-related parameter or header appears anywhere in the wp/v2 route discovery
+    document, and no such header was returned on any observed response.
+reversibility:
+  grade: documented
+  description: >-
+    WordPress core gives every content write a real reversal path, and the route document declares
+    it: DELETE on a post-type resource moves it to trash rather than erasing it (`force=false` is
+    the default), and the trashed item can be restored by updating its `status` back to publish or
+    draft. Revisions are also retained, so an overwrite is recoverable. What Campbell's does NOT
+    state anywhere is the WINDOW — WordPress purges trash on a site-configurable schedule
+    (EMPTY_TRASH_DAYS) and Campbell's publishes no value for it, so a caller cannot know how long
+    a restore remains possible. Grade is therefore `documented`, not `verified`.
+  write_surfaces:
+    - operation: deleteRecipeId
+      reversal: Restore from trash by setting status back to publish/draft.
+      window: unstated
+      note: >-
+        The `force` query parameter is declared on the route with default false, meaning the delete
+        is a trash operation. Setting force=true bypasses trash and is irreversible.
+    - operation: deleteProductId
+      reversal: Restore from trash by setting status back to publish/draft.
+      window: unstated
+    - operation: deleteExternalProductId
+      reversal: Restore from trash; revisions retained.
+      window: unstated
+    - operation: deleteCscFaqId
+      reversal: Restore from trash.
+      window: unstated
+  irreversible:
+    - description: Any DELETE issued with force=true skips trash and cannot be undone.
+      evidence: The `force` argument is declared on every deletable route in the discovery document.
+  docs: null
+dry_run_mode:
+  supported: false
+  note: No preview/validate-only mode is declared on any route.
+cross_links:
+  errors: errors/campbell-soup-problem-types.yml
+  lifecycle: lifecycle/campbell-soup-lifecycle.yml
+  authentication: authentication/campbell-soup-authentication.yml
+  rate_limits: rate-limits/campbell-soup-rate-limits.yml
+  data_model: data-model/campbell-soup-data-model.yml

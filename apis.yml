@@ -1,7 +1,6 @@
 aid: campbell-soup
 name: Campbell Soup
-url: >-
-  https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/campbell-soup/refs/heads/main/apis.yml
 deliveryModel:
   model: unknown
   open_source: false
@@ -28,70 +27,115 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbell-soup.png
 type: Index
 tags:
-  - Food
-  - Consumer Packaged Goods
-  - Recipes
-  - Brands
-  - Fortune 500
+- Food
+- Consumer Packaged Goods
+- Recipes
+- Products
+- Nutrition
+- Brands
+- Fortune 500
+- Content API
+- WordPress
 access: 3rd-Party
 created: '2026-03-23'
-modified: '2026-04-23'
+modified: '2026-09-05'
 position: Producing
 specificationVersion: '0.23'
-description: >-
-  Campbell Soup Company (now rebranded as The Campbell's Company) is a
-  manufacturer and marketer of high-quality branded convenience food
-  products, including soups, simple meals, beverages, snacks, and packaged
-  fresh foods under brands such as Campbell's, Swanson, Pace, Prego,
-  V8, Pepperidge Farm, Goldfish, and Snyder's of Hanover. Historically
-  Campbell's ran a public Campbell's Kitchen Developer API exposing recipes,
-  products, UPC lookup, and nutrition data for web and mobile integrations,
-  though current availability of the public developer portal varies and
-  typically requires partner access.
+description: 'The Campbell''s Company (formerly Campbell Soup Company) is a Fortune 500 manufacturer and
+  marketer of branded convenience food products — soups, simple meals, beverages, snacks and packaged
+  fresh foods — under Campbell''s, Swanson, Pace, Prego, V8, Pepperidge Farm, Goldfish and Snyder''s of
+  Hanover. Its public Campbell''s Kitchen developer API (developer.campbellskitchen.com) has been retired
+  without announcement; that host returns NXDOMAIN as of 2026-09-05. The recipe and product catalog it
+  served is nevertheless still readable anonymously: the consumer site www.campbells.com exposes a live,
+  unauthenticated WordPress REST API at /wp-json/wp/v2 carrying Campbell''s own custom content types (recipe,
+  product, external_product, csc_faq) and product taxonomies, with 316 recipes and 210 products observed.
+  Campbell''s does not document, version, price or acknowledge this surface as an API.'
 apis:
-  - aid: campbell-soup:campbells-kitchen-api
-    name: Campbell's Kitchen API
-    description: >-
-      The Campbell's Kitchen API exposes the Campbell's Kitchen recipe and
-      product catalog — including thousands of recipes across Campbell's,
-      Swanson, Pace, Prego, and Pepperidge Farm brands — to developers
-      building search-based recipe and product applications. The API
-      supports search by key ingredients, product UPC, and keywords, and
-      returns recipe details, photos, ratings, and updated Nutrition Facts
-      panel data.
-    humanURL: https://developer.campbellskitchen.com/
-    tags:
-      - Recipes
-      - Nutrition
-      - Product
-      - UPC
-    tags_raw:
-      - Recipes
-      - Nutrition
-      - Products
-      - UPC
-    properties:
-      - type: Documentation
-        url: https://developer.campbellskitchen.com/documentation/api-overview
-      - type: DeveloperPortal
-        url: https://developer.campbellskitchen.com/
+- aid: campbell-soup:campbells-content-api
+  name: Campbell's Content API (WordPress REST)
+  description: 'The publicly callable WordPress REST API that The Campbell''s Company serves from its
+    consumer brand site. It is the de facto successor to the retired Campbell''s Kitchen API: the same
+    recipe and product catalog is reachable anonymously over the wp/v2 namespace, alongside Campbell''s
+    own custom post types (recipe, product, external_product, csc_faq) and its product/recipe taxonomies
+    (csc_product_line, csc_product_cat, csc_product_tag, csc_dietary_alternative, csc_main_ingredient,
+    csc_recipe_collection, csc_topic). Reads need no key, no signup and no quota; write methods are declared
+    by WordPress core but the live surface returns Allow: GET to anonymous callers. Observed 2026-09-05:
+    316 recipes, 210 products, 36 FAQs, 422 cross-type search matches for "soup". Campbell''s publishes
+    no OpenAPI, no documentation and no versioning or deprecation policy for it — the description in openapi/
+    is derived by API Evangelist from the site''s own route discovery document.'
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbell-soup.png
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Recipes
+  - Products
+  - Nutrition
+  - Content API
+  - WordPress
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-content-api-openapi.yml
+  - type: Overlay
+    url: overlays/campbell-soup-content-api-overlay.yaml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: MCPServer
+    url: mcp/campbell-soup-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
 common:
-  - type: DomainSecurity
-    url: security/campbell-soup-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/campbell-soup-company
-  - type: Website
-    url: https://www.thecampbellscompany.com/
-  - type: ConsumerSite
-    url: https://www.campbells.com/
-  - type: Recipes
-    url: https://www.campbells.com/recipes/
-  - type: Products
-    url: https://www.campbells.com/products/
-  - type: DeveloperPortal
-    url: https://developer.campbellskitchen.com/
-  - type: PressRoom
-    url: https://www.thecampbellscompany.com/newsroom/
+- type: DomainSecurity
+  url: security/campbell-soup-domain-security.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/campbell-soup-company
+- type: Website
+  url: https://www.thecampbellscompany.com/
+- type: ConsumerSite
+  url: https://www.campbells.com/
+- type: Recipes
+  url: https://www.campbells.com/recipes/
+- type: Products
+  url: https://www.campbells.com/products/
+- type: PressRoom
+  url: https://www.thecampbellscompany.com/newsroom/
+- type: LLMsTxt
+  url: llms/campbell-soup-llms.txt
+- type: Packages
+  url: packages/campbell-soup-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: FinOps
+  url: finops/campbell-soup-finops.yml
+- type: Support
+  url: https://www.campbells.com/contact-us/
+- type: PrivacyPolicy
+  url: https://www.thecampbellscompany.com/privacy-policy/
+- type: TermsOfService
+  url: https://www.thecampbellscompany.com/terms-of-use/
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v3

@@ -1,0 +1,27 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  npm registry, PyPI, GitHub org lookup and the provider's own sites, searched 2026-09-05
+provider: The Campbell's Company
+providerId: campbell-soup
+package_count: 0
+official_sdk_count: 0
+packages: []
+searched:
+  - registry: npm
+    query: campbells, campbells-kitchen
+    result: 404 — no package
+    url: https://registry.npmjs.org/campbells
+  - registry: github
+    query: orgs campbells, campbellsoup, thecampbellscompany, campbell-soup-company
+    result: 404 — The Campbell's Company operates no public GitHub organization under any of these names
+    url: https://api.github.com/orgs/campbells
+  - registry: provider-site
+    query: SDK / client library links on campbells.com and thecampbellscompany.com
+    result: none — no developer or SDK section exists on either site
+note: >-
+  Campbell's publishes no client libraries. It has no public code presence at all: no GitHub
+  organization, no registry packages, and no SDK links anywhere on its sites. The live wp/v2 REST
+  surface is callable with a plain HTTP client and needs none, but the absence is total rather
+  than deliberate — the retired Campbell's Kitchen developer program took the whole developer
+  surface with it. No SDKs pointer is emitted, because there are no SDKs.

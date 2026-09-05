@@ -1,0 +1,50 @@
+generated: '2026-09-05'
+method: derived
+source: openapi/campbell-soup-content-api-openapi.yml (derived from https://www.campbells.com/wp-json/wp/v2)
+provider: The Campbell's Company
+providerId: campbell-soup
+status: candidate
+summary: >-
+  Campbell's ships no MCP server. Searched the consumer and corporate sites, the retired developer
+  portal host, and the public registries on 2026-09-05 and found none — no hosted endpoint, no npm
+  or PyPI package, no GitHub organization (api.github.com/orgs/{campbells,campbellsoup,
+  thecampbellscompany,campbell-soup-company} all 404). The tools below are a CANDIDATE set this
+  pipeline derived from the read operations the live wp/v2 surface actually serves; nobody
+  operates them.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+tools:
+  - name: search_recipes
+    description: Search Campbell's 316-recipe catalog by keyword, slug, collection or date.
+    rest: [getRecipe]
+    inputSchema_source: parameters of GET /wp/v2/recipe in the derived OpenAPI
+  - name: get_recipe
+    description: Fetch one recipe by its numeric WordPress id.
+    rest: [getRecipeId]
+  - name: search_products
+    description: Search Campbell's 210-product catalog, filterable by product line, category, tag and dietary alternative.
+    rest: [getProduct]
+  - name: get_product
+    description: Fetch one product by id.
+    rest: [getProductId]
+  - name: list_recipe_collections
+    description: List the curated recipe groupings (One Pot, Casseroles & Bakes, 30 Minute).
+    rest: [getCscRecipeCollection]
+  - name: list_product_lines
+    description: List the Campbell's brand/product-line taxonomy terms.
+    rest: [getCscProductLine]
+  - name: search_faqs
+    description: Search the 36 consumer FAQ entries by topic.
+    rest: [getCscFaq]
+  - name: site_search
+    description: Cross-type keyword search over every registered content type.
+    rest: [getSearch]
+notes: >-
+  Write tools are deliberately NOT proposed. The wp/v2 route document declares POST/PUT/PATCH/DELETE
+  on these types, but the live surface returns `Allow: GET` to anonymous callers and Campbell's
+  issues no credentials, so a write tool would be unusable by construction.

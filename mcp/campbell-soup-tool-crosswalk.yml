@@ -1,0 +1,82 @@
+generated: '2026-09-05'
+method: derived
+source: mcp/campbell-soup-mcp.yml + openapi/campbell-soup-content-api-openapi.yml
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  Binds the candidate MCP tool set to the REST operations that back it. Confidence is high
+  throughout because both sides were derived from the same fetched route document — the tools were
+  defined FROM these operations, so the binding is definitional rather than inferred. There is no
+  live MCP server and no GraphQL surface to diverge from.
+surfaces:
+  openapi: openapi/campbell-soup-content-api-openapi.yml
+  openapi_gated: false
+  graphql: null
+  mcp: null
+  mcp_gated: false
+  note: >-
+    /graphql on www.campbells.com returned 404 (HTML shell) on 2026-09-05 — no GraphQL surface.
+crosswalk:
+  - tool: search_recipes
+    category: read
+    rest: [getRecipe]
+    binding: direct
+    confidence: high
+  - tool: get_recipe
+    category: read
+    rest: [getRecipeId]
+    binding: direct
+    confidence: high
+  - tool: search_products
+    category: read
+    rest: [getProduct]
+    binding: direct
+    confidence: high
+  - tool: get_product
+    category: read
+    rest: [getProductId]
+    binding: direct
+    confidence: high
+  - tool: list_recipe_collections
+    category: taxonomy
+    rest: [getCscRecipeCollection]
+    binding: direct
+    confidence: high
+  - tool: list_product_lines
+    category: taxonomy
+    rest: [getCscProductLine]
+    binding: direct
+    confidence: high
+  - tool: search_faqs
+    category: read
+    rest: [getCscFaq]
+    binding: direct
+    confidence: high
+  - tool: site_search
+    category: search
+    rest: [getSearch]
+    binding: direct
+    confidence: high
+mcp_only: []
+rest_only:
+  - operations: [getPosts, getPages, getMedia, getUsers, getComments]
+    reason: Site-infrastructure content, not part of the recipe/product value surface an agent would call.
+  - operations: [getTypes, getTaxonomies, getStatuses]
+    reason: Discovery documents — consumed once to build this crosswalk, not useful as runtime tools.
+  - operations: [postRecipe, deleteRecipeId, postProduct, deleteProductId, postExternalProduct, deleteExternalProductId, postCscFaq, deleteCscFaqId]
+    reason: >-
+      Write operations declared by WordPress core but unreachable — the live surface returns
+      `Allow: GET` to anonymous callers and Campbell's issues no credentials to third parties.
+  - operations: [getExternalProduct, getExternalProductId]
+    reason: Overlaps search_products conceptually but is a separate unclassified type; folded into site_search rather than given its own tool.
+coverage:
+  mcp_tools: 8
+  rest_operations_total: 102
+  rest_operations_bound: 8
+  mcp_only: 0
+  rest_only: 94
+  note: >-
+    The low bound ratio is expected and not a defect: 102 counts every method on every route the
+    WordPress core contract declares, the large majority of which are editorial/administrative or
+    credential-gated. Of the anonymously callable content operations, the candidate tools cover the
+    recipe, product, FAQ, taxonomy and search surfaces.

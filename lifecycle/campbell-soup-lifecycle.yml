@@ -1,0 +1,51 @@
+generated: '2026-09-05'
+method: searched
+source: live probes of campbells.com / thecampbellscompany.com / developer.campbellskitchen.com on 2026-09-05
+provider: The Campbell's Company
+providerId: campbell-soup
+summary: >-
+  Campbell's runs no API lifecycle program. There is no versioning policy, no deprecation policy,
+  no SLA, no status page and no changelog. The clearest lifecycle fact on record is a retirement
+  the company never announced.
+versioning:
+  scheme: namespace-in-path (wp/v2)
+  policy_url: null
+  documented: false
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: No Sunset or Deprecation header was returned on any observed response.
+status_page:
+  published: false
+  url: null
+  note: >-
+    No status.campbells.com, status page link, or uptime surface was found on either the consumer
+    or corporate site.
+sla:
+  published: false
+retirements:
+  - api: Campbell's Kitchen API
+    host: developer.campbellskitchen.com
+    status: retired
+    announced: false
+    evidence: >-
+      developer.campbellskitchen.com returns NXDOMAIN in DNS as of 2026-09-05 — the host does not
+      resolve at all. The former portal (https://developer.campbellskitchen.com/) and its API
+      overview page are unreachable, and no sunset notice, migration guide or archived
+      announcement was found on campbells.com or thecampbellscompany.com.
+    successor: >-
+      The same recipe and product catalog is now readable anonymously over the WordPress REST
+      surface at https://www.campbells.com/wp-json/wp/v2 (custom post types `recipe`, `product`,
+      `external_product`). Campbell's has never documented this as an API or connected it to the
+      retired program — the succession is our observation, not the provider's statement.
+  - api: campbellskitchen.com (apex)
+    status: redirected
+    evidence: >-
+      http://campbellskitchen.com/ 301s to https://www.campbells.com/recipes/. The apex does not
+      serve valid TLS — the certificate presented does not cover campbellskitchen.com.
+deprecated_operations: []
+note: >-
+  deprecated_operations is empty because the derived OpenAPI carries no `deprecated: true` flags —
+  the WordPress route discovery document declares none.
