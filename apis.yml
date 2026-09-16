@@ -30,6 +30,16 @@ tags:
 - Food
 - Consumer Packaged Goods
 - Recipes
+- Product
+- Nutrition
+- Brands
+- Fortune 500
+- content-api
+- WordPress
+tags_raw:
+- Food
+- Consumer Packaged Goods
+- Recipes
 - Products
 - Nutrition
 - Brands
@@ -51,33 +61,16 @@ description: 'The Campbell''s Company (formerly Campbell Soup Company) is a Fort
   product, external_product, csc_faq) and product taxonomies, with 316 recipes and 210 products observed.
   Campbell''s does not document, version, price or acknowledge this surface as an API.'
 apis:
-- aid: campbell-soup:campbells-content-api
-  name: Campbell's Content API (WordPress REST)
-  description: 'The publicly callable WordPress REST API that The Campbell''s Company serves from its
-    consumer brand site. It is the de facto successor to the retired Campbell''s Kitchen API: the same
-    recipe and product catalog is reachable anonymously over the wp/v2 namespace, alongside Campbell''s
-    own custom post types (recipe, product, external_product, csc_faq) and its product/recipe taxonomies
-    (csc_product_line, csc_product_cat, csc_product_tag, csc_dietary_alternative, csc_main_ingredient,
-    csc_recipe_collection, csc_topic). Reads need no key, no signup and no quota; write methods are declared
-    by WordPress core but the live surface returns Allow: GET to anonymous callers. Observed 2026-09-05:
-    316 recipes, 210 products, 36 FAQs, 422 cross-type search matches for "soup". Campbell''s publishes
-    no OpenAPI, no documentation and no versioning or deprecation policy for it — the description in openapi/
-    is derived by API Evangelist from the site''s own route discovery document.'
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbell-soup.png
+- aid: campbell-soup:campbell-soup-authors-api
+  name: Campbell Soup Authors API
+  description: The Authors API from Campbell Soup — 3 operation(s) for authors.
   humanURL: https://www.campbells.com/
   baseURL: https://www.campbells.com/wp-json
   tags:
-  - Recipes
-  - Products
-  - Nutrition
-  - Content API
-  - WordPress
-  - Search
+  - Authors
   properties:
   - type: OpenAPI
-    url: openapi/campbell-soup-content-api-openapi.yml
-  - type: Overlay
-    url: overlays/campbell-soup-content-api-overlay.yaml
+    url: openapi/campbell-soup-authors-api-openapi.yml
   - type: Authentication
     url: authentication/campbell-soup-authentication.yml
   - type: ErrorCatalog
@@ -96,13 +89,343 @@ apis:
     url: rate-limits/campbell-soup-rate-limits.yml
   - type: Plans
     url: plans/campbell-soup-plans-pricing.yml
-  - type: MCPServer
-    url: mcp/campbell-soup-mcp.yml
   - type: ToolCrosswalk
     url: mcp/campbell-soup-tool-crosswalk.yml
-  - type: AgentSkill
-    url: skills/_index.yml
+- aid: campbell-soup:campbell-soup-comments-api
+  name: Campbell Soup Comments API
+  description: The Comments API from Campbell Soup — 2 operation(s) for comments.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-comments-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-discovery-api
+  name: Campbell Soup Discovery API
+  description: The Discovery API from Campbell Soup — 6 operation(s) for discovery.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-discovery-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-external-products-api
+  name: Campbell Soup External Products API
+  description: The External Products API from Campbell Soup — 2 operation(s) for external products.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - External Products
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-external-products-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-faqs-api
+  name: Campbell Soup FA Qs API
+  description: The FAQs API from Campbell Soup — 2 operation(s) for faqs.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - FAQs
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-faqs-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-media-api
+  name: Campbell Soup Media API
+  description: The Media API from Campbell Soup — 4 operation(s) for media.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Media
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-media-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-pages-api
+  name: Campbell Soup Pages API
+  description: The Pages API from Campbell Soup — 2 operation(s) for pages.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-pages-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-posts-api
+  name: Campbell Soup Posts API
+  description: The Posts API from Campbell Soup — 2 operation(s) for posts.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-posts-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-products-api
+  name: Campbell Soup Products API
+  description: The Products API from Campbell Soup — 2 operation(s) for products.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-products-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-recipes-api
+  name: Campbell Soup Recipes API
+  description: The Recipes API from Campbell Soup — 2 operation(s) for recipes.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Recipes
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-recipes-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-search-api
+  name: Campbell Soup Search API
+  description: The Search API from Campbell Soup — 1 operation(s) for search.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-search-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-taxonomies-api
+  name: Campbell Soup Taxonomies API
+  description: The Taxonomies API from Campbell Soup — 18 operation(s) for taxonomies.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - Taxonomies
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-taxonomies-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
 common:
+- type: Overlay
+  url: overlays/campbell-soup-content-api-overlay.yaml
+- type: MCPServer
+  url: mcp/campbell-soup-mcp.yml
 - type: DomainSecurity
   url: security/campbell-soup-domain-security.yml
 - type: LinkedIn
