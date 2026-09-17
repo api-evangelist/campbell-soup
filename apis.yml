@@ -181,36 +181,6 @@ apis:
     url: plans/campbell-soup-plans-pricing.yml
   - type: ToolCrosswalk
     url: mcp/campbell-soup-tool-crosswalk.yml
-- aid: campbell-soup:campbell-soup-faqs-api
-  name: Campbell Soup FA Qs API
-  description: The FAQs API from Campbell Soup — 2 operation(s) for faqs.
-  humanURL: https://www.campbells.com/
-  baseURL: https://www.campbells.com/wp-json
-  tags:
-  - FAQs
-  properties:
-  - type: OpenAPI
-    url: openapi/campbell-soup-faqs-api-openapi.yml
-  - type: Authentication
-    url: authentication/campbell-soup-authentication.yml
-  - type: ErrorCatalog
-    url: errors/campbell-soup-problem-types.yml
-  - type: Conventions
-    url: conventions/campbell-soup-conventions.yml
-  - type: Idempotency
-    url: conventions/campbell-soup-conventions.yml
-  - type: DataModel
-    url: data-model/campbell-soup-data-model.yml
-  - type: Conformance
-    url: conformance/campbell-soup-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/campbell-soup-lifecycle.yml
-  - type: RateLimits
-    url: rate-limits/campbell-soup-rate-limits.yml
-  - type: Plans
-    url: plans/campbell-soup-plans-pricing.yml
-  - type: ToolCrosswalk
-    url: mcp/campbell-soup-tool-crosswalk.yml
 - aid: campbell-soup:campbell-soup-media-api
   name: Campbell Soup Media API
   description: The Media API from Campbell Soup — 4 operation(s) for media.
@@ -401,6 +371,36 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/campbell-soup-taxonomies-api-openapi.yml
+  - type: Authentication
+    url: authentication/campbell-soup-authentication.yml
+  - type: ErrorCatalog
+    url: errors/campbell-soup-problem-types.yml
+  - type: Conventions
+    url: conventions/campbell-soup-conventions.yml
+  - type: Idempotency
+    url: conventions/campbell-soup-conventions.yml
+  - type: DataModel
+    url: data-model/campbell-soup-data-model.yml
+  - type: Conformance
+    url: conformance/campbell-soup-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/campbell-soup-lifecycle.yml
+  - type: RateLimits
+    url: rate-limits/campbell-soup-rate-limits.yml
+  - type: Plans
+    url: plans/campbell-soup-plans-pricing.yml
+  - type: ToolCrosswalk
+    url: mcp/campbell-soup-tool-crosswalk.yml
+- aid: campbell-soup:campbell-soup-faqs-api
+  name: Campbell Soup FA Qs API
+  description: The FAQs API from Campbell Soup — 2 operation(s) for faqs.
+  humanURL: https://www.campbells.com/
+  baseURL: https://www.campbells.com/wp-json
+  tags:
+  - FAQs
+  properties:
+  - type: OpenAPI
+    url: openapi/campbell-soup-faqs-api-openapi.yml
   - type: Authentication
     url: authentication/campbell-soup-authentication.yml
   - type: ErrorCatalog
