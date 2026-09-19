@@ -277,6 +277,8 @@ apis:
   humanURL: https://www.campbells.com/
   baseURL: https://www.campbells.com/wp-json
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -367,6 +369,8 @@ apis:
   humanURL: https://www.campbells.com/
   baseURL: https://www.campbells.com/wp-json
   tags:
+  - taxonomies
+  tags_raw:
   - Taxonomies
   properties:
   - type: OpenAPI
