@@ -1,0 +1,52 @@
+{
+  "provider": "campbell-soup",
+  "sources": [
+    "campbell-soup-authors-api-openapi.yml",
+    "campbell-soup-comments-api-openapi.yml",
+    "campbell-soup-discovery-api-openapi.yml",
+    "campbell-soup-external-products-api-openapi.yml",
+    "campbell-soup-fa-qs-api-openapi.yml",
+    "campbell-soup-media-api-openapi.yml",
+    "campbell-soup-pages-api-openapi.yml",
+    "campbell-soup-posts-api-openapi.yml",
+    "campbell-soup-products-api-openapi.yml",
+    "campbell-soup-recipes-api-openapi.yml",
+    "campbell-soup-search-api-openapi.yml",
+    "campbell-soup-taxonomies-api-openapi.yml"
+  ],
+  "outputs": [
+    "campbell-soup-authors-api-openapi.yml",
+    "campbell-soup-comments-api-openapi.yml",
+    "campbell-soup-discovery-api-openapi.yml",
+    "campbell-soup-external-products-api-openapi.yml",
+    "campbell-soup-fa-qs-api-openapi.yml",
+    "campbell-soup-media-api-openapi.yml",
+    "campbell-soup-pages-api-openapi.yml",
+    "campbell-soup-posts-api-openapi.yml",
+    "campbell-soup-products-api-openapi.yml",
+    "campbell-soup-recipes-api-openapi.yml",
+    "campbell-soup-search-api-openapi.yml",
+    "campbell-soup-taxonomies-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "campbell-soup-authors-api-openapi.yml: previously refined output kept for 8 operation(s) no archived document covers (e.g. /wp/v2/users get, /wp/v2/users post, /wp/v2/users/me delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-comments-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/comments get, /wp/v2/comments post, /wp/v2/comments/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-discovery-api-openapi.yml: previously refined output kept for 6 operation(s) no archived document covers (e.g. /wp/v2/statuses get, /wp/v2/statuses/{status} get, /wp/v2/taxonomies get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-external-products-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/external_product get, /wp/v2/external_product post, /wp/v2/external_product/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-fa-qs-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/csc_faq get, /wp/v2/csc_faq post, /wp/v2/csc_faq/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-media-api-openapi.yml: previously refined output kept for 7 operation(s) no archived document covers (e.g. /wp/v2/media get, /wp/v2/media post, /wp/v2/media/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-pages-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/pages get, /wp/v2/pages post, /wp/v2/pages/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-posts-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/posts get, /wp/v2/posts post, /wp/v2/posts/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-products-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/product get, /wp/v2/product post, /wp/v2/product/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-recipes-api-openapi.yml: previously refined output kept for 5 operation(s) no archived document covers (e.g. /wp/v2/recipe get, /wp/v2/recipe post, /wp/v2/recipe/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-search-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /wp/v2/search get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "campbell-soup-taxonomies-api-openapi.yml: previously refined output kept for 45 operation(s) no archived document covers (e.g. /wp/v2/categories get, /wp/v2/categories post, /wp/v2/categories/{id} delete); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

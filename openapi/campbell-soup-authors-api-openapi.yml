@@ -1,0 +1,654 @@
+openapi: 3.2.0
+info:
+  title: Campbell's Company Content API (WordPress REST) Authors API
+  version: wp/v2
+  description: Machine-readable description of the publicly callable WordPress REST API that The Campbell's Company serves from its consumer brand site www.campbells.com.
+  contact:
+    name: The Campbell's Company
+    url: https://www.campbells.com/contact-us/
+  x-derived-from: https://www.campbells.com/wp-json/wp/v2
+  x-derivation-method: mechanical transform of the WordPress wp/v2 route discovery document
+servers:
+- url: https://www.campbells.com/wp-json
+  description: Campbell's consumer brand site — recipes, products, FAQs (316/210/36 observed 2026-09-05)
+- url: https://www.snydersofhanover.com/wp-json
+  description: Snyder's of Hanover brand site — same wp/v2 contract, 37 products observed 2026-09-05
+- url: https://www.pacefoods.com/wp-json
+  description: Pace Foods brand site — same wp/v2 contract, 28 products observed 2026-09-05
+tags:
+- name: Authors
+paths:
+  /wp/v2/users:
+    get:
+      operationId: getUsers
+      tags:
+      - Authors
+      summary: GET /wp/v2/users
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - registered_date
+          - slug
+          - include_slugs
+          - email
+          - url
+          default: name
+        description: Sort collection by user attribute.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users with one or more specific slugs.
+      - name: roles
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users matching at least one specific role provided. Accepts csv list or single role.
+      - name: capabilities
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to users matching at least one specific capability provided. Accepts csv list or single capability.
+      - name: who
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - authors
+        description: Limit result set to users who are considered authors.
+      - name: has_published_posts
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Limit result set to users who have published posts.
+      - name: search_columns
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - email
+            - name
+            - id
+            - username
+            - slug
+          default: []
+        description: Array of column names to be searched.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postUsers
+      tags:
+      - Authors
+      summary: POST /wp/v2/users
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                url:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                locale:
+                  type: string
+                  enum:
+                  - ''
+                  - en_US
+                  - es_PR
+                nickname:
+                  type: string
+                slug:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+                password:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/users/{id}:
+    get:
+      operationId: getUsersId
+      tags:
+      - Authors
+      summary: GET /wp/v2/users/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postUsersId
+      tags:
+      - Authors
+      summary: POST /wp/v2/users/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                url:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                locale:
+                  type: string
+                  enum:
+                  - ''
+                  - en_US
+                  - es_PR
+                nickname:
+                  type: string
+                slug:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+                password:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteUsersId
+      tags:
+      - Authors
+      summary: DELETE /wp/v2/users/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/users/me:
+    get:
+      operationId: getUsersMe
+      tags:
+      - Authors
+      summary: GET /wp/v2/users/me
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postUsersMe
+      tags:
+      - Authors
+      summary: POST /wp/v2/users/me
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                name:
+                  type: string
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                url:
+                  type: string
+                  format: uri
+                description:
+                  type: string
+                locale:
+                  type: string
+                  enum:
+                  - ''
+                  - en_US
+                  - es_PR
+                nickname:
+                  type: string
+                slug:
+                  type: string
+                roles:
+                  type: array
+                  items:
+                    type: string
+                password:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteUsersMe
+      tags:
+      - Authors
+      summary: DELETE /wp/v2/users/me
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST error envelope returned on every 4xx/5xx.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      required:
+      - code
+      - message
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: WordPress application passwords over HTTP Basic. Required for every write method; not issued to the public.

@@ -1,7 +1,9 @@
 ---
 title: Campbell Soup uses AI to go from Mmm ...
 url: https://njbiz.com/campbell-soup-uses-ai-to-go-from-mmm-mmm-good-to-even-better/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Campbell Soup" press release artificial intelligence'
 position: 1
 source: serpapi-google

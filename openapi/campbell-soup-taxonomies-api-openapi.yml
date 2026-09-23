@@ -1,0 +1,3293 @@
+openapi: 3.2.0
+info:
+  title: Campbell's Company Content API (WordPress REST) ……
+  version: wp/v2
+  description: Machine-readable description of the publicly callable WordPress REST API that The Campbell's Company serves from its consumer brand site www.campbells.com.
+  contact:
+    name: The Campbell's Company
+    url: https://www.campbells.com/contact-us/
+  x-derived-from: https://www.campbells.com/wp-json/wp/v2
+  x-derivation-method: mechanical transform of the WordPress wp/v2 route discovery document
+servers:
+- url: https://www.campbells.com/wp-json
+  description: Campbell's consumer brand site — recipes, products, FAQs (316/210/36 observed 2026-09-05)
+- url: https://www.snydersofhanover.com/wp-json
+  description: Snyder's of Hanover brand site — same wp/v2 contract, 37 products observed 2026-09-05
+- url: https://www.pacefoods.com/wp-json
+  description: Pace Foods brand site — same wp/v2 contract, 28 products observed 2026-09-05
+tags:
+- name: Taxonomies
+paths:
+  /wp/v2/categories:
+    get:
+      operationId: getCategories
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/categories
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCategories
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/categories
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/categories/{id}:
+    get:
+      operationId: getCategoriesId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/categories/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCategoriesId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/categories/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCategoriesId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/categories/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/tags:
+    get:
+      operationId: getTags
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/tags
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postTags
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/tags
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTagsId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/tags/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postTagsId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/tags/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteTagsId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/tags/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_dietary_alternative:
+    get:
+      operationId: getCscDietaryAlternative
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_dietary_alternative
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscDietaryAlternative
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_dietary_alternative
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_dietary_alternative/{id}:
+    get:
+      operationId: getCscDietaryAlternativeId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_dietary_alternative/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscDietaryAlternativeId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_dietary_alternative/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscDietaryAlternativeId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_dietary_alternative/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_main_ingredient:
+    get:
+      operationId: getCscMainIngredient
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_main_ingredient
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscMainIngredient
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_main_ingredient
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_main_ingredient/{id}:
+    get:
+      operationId: getCscMainIngredientId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_main_ingredient/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscMainIngredientId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_main_ingredient/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscMainIngredientId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_main_ingredient/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_cat:
+    get:
+      operationId: getCscProductCat
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_cat
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductCat
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_cat
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_cat/{id}:
+    get:
+      operationId: getCscProductCatId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_cat/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductCatId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_cat/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscProductCatId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_product_cat/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_line:
+    get:
+      operationId: getCscProductLine
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_line
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductLine
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_line
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_line/{id}:
+    get:
+      operationId: getCscProductLineId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_line/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductLineId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_line/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscProductLineId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_product_line/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_tag:
+    get:
+      operationId: getCscProductTag
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_tag
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Offset the result set by a specific number of items.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductTag
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_tag
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_product_tag/{id}:
+    get:
+      operationId: getCscProductTagId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_product_tag/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscProductTagId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_product_tag/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscProductTagId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_product_tag/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_recipe_collection:
+    get:
+      operationId: getCscRecipeCollection
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_recipe_collection
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscRecipeCollection
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_recipe_collection
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_recipe_collection/{id}:
+    get:
+      operationId: getCscRecipeCollectionId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_recipe_collection/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscRecipeCollectionId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_recipe_collection/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscRecipeCollectionId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_recipe_collection/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_topic:
+    get:
+      operationId: getCscTopic
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_topic
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1
+        description: Current page of the collection.
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 10
+        description: Maximum number of items to be returned in result set.
+      - name: search
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to those matching a string.
+      - name: exclude
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Ensure result set excludes specific IDs.
+      - name: include
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+        description: Limit result set to specific IDs.
+      - name: order
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+        description: Order sort attribute ascending or descending.
+      - name: orderby
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+        description: Sort collection by term attribute.
+      - name: hide_empty
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: Whether to hide terms not assigned to any posts.
+      - name: parent
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific parent.
+      - name: post
+        in: query
+        required: false
+        schema:
+          type: integer
+        description: Limit result set to terms assigned to a specific post.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        description: Limit result set to terms with one or more specific slugs.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscTopic
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_topic
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/csc_topic/{id}:
+    get:
+      operationId: getCscTopicId
+      tags:
+      - Taxonomies
+      summary: GET /wp/v2/csc_topic/{id}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    post:
+      operationId: postCscTopicId
+      tags:
+      - Taxonomies
+      summary: POST /wp/v2/csc_topic/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                name:
+                  type: string
+                slug:
+                  type: string
+                parent:
+                  type: integer
+                meta:
+                  type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+    delete:
+      operationId: deleteCscTopicId
+      tags:
+      - Taxonomies
+      summary: DELETE /wp/v2/csc_topic/{id}
+      description: 'WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2. Write access requires authentication; the live surface returns `Allow: GET` to anonymous callers.'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST error envelope returned on every 4xx/5xx.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      required:
+      - code
+      - message
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: WordPress application passwords over HTTP Basic. Required for every write method; not issued to the public.

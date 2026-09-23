@@ -1,7 +1,9 @@
 ---
 title: Campbell Soup embracing AI to innovate
 url: https://www.foodbusinessnews.net/articles/23312-campbell-soup-embracing-ai-to-innovate
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Campbell Soup" press release artificial intelligence'
 position: 3
 source: serpapi-google

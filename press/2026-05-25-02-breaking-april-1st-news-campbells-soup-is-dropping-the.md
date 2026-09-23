@@ -1,7 +1,9 @@
 ---
 title: 'Breaking April 1st News: Campbell''s Soup Is Dropping the ...'
 url: https://www.linkedin.com/pulse/breaking-april-1st-news-campbells-soup-dropping-from-its-david-danto-em6ke
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Campbell Soup" press release artificial intelligence'
 position: 2
 source: serpapi-google

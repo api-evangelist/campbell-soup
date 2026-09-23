@@ -1,0 +1,367 @@
+openapi: 3.2.0
+info:
+  title: Campbell's Company Content API (WordPress REST) … Discovery…
+  version: wp/v2
+  description: Machine-readable description of the publicly callable WordPress REST API that The Campbell's Company serves from its consumer brand site www.campbells.com.
+  contact:
+    name: The Campbell's Company
+    url: https://www.campbells.com/contact-us/
+  x-derived-from: https://www.campbells.com/wp-json/wp/v2
+  x-derivation-method: mechanical transform of the WordPress wp/v2 route discovery document
+servers:
+- url: https://www.campbells.com/wp-json
+  description: Campbell's consumer brand site — recipes, products, FAQs (316/210/36 observed 2026-09-05)
+- url: https://www.snydersofhanover.com/wp-json
+  description: Snyder's of Hanover brand site — same wp/v2 contract, 37 products observed 2026-09-05
+- url: https://www.pacefoods.com/wp-json
+  description: Pace Foods brand site — same wp/v2 contract, 28 products observed 2026-09-05
+tags:
+- name: Discovery
+paths:
+  /wp/v2/types:
+    get:
+      operationId: getTypes
+      tags:
+      - Discovery
+      summary: GET /wp/v2/types
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/types/{type}:
+    get:
+      operationId: getTypesType
+      tags:
+      - Discovery
+      summary: GET /wp/v2/types/{type}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: type
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/statuses:
+    get:
+      operationId: getStatuses
+      tags:
+      - Discovery
+      summary: GET /wp/v2/statuses
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/statuses/{status}:
+    get:
+      operationId: getStatusesStatus
+      tags:
+      - Discovery
+      summary: GET /wp/v2/statuses/{status}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: status
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/taxonomies:
+    get:
+      operationId: getTaxonomies
+      tags:
+      - Discovery
+      summary: GET /wp/v2/taxonomies
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      - name: type
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Limit results to taxonomies associated with a specific post type.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+  /wp/v2/taxonomies/{taxonomy}:
+    get:
+      operationId: getTaxonomiesTaxonomy
+      tags:
+      - Discovery
+      summary: GET /wp/v2/taxonomies/{taxonomy}
+      description: WordPress REST API route declared by the live discovery document at https://www.campbells.com/wp-json/wp/v2.
+      parameters:
+      - name: taxonomy
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Path parameter declared by the WordPress route pattern.
+      - name: context
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+        description: Scope under which the request is made; determines fields present in response.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '403':
+          description: Forbidden — the caller lacks the capability, or an edge policy rejected the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+        '404':
+          description: No route or resource matched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WPError'
+components:
+  schemas:
+    WPError:
+      type: object
+      description: The WordPress REST error envelope returned on every 4xx/5xx.
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+      required:
+      - code
+      - message
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: WordPress application passwords over HTTP Basic. Required for every write method; not issued to the public.
